@@ -357,6 +357,12 @@ git_repository(
     remote = "git@github.com:hedronvision/bazel-compile-commands-extractor.git",
 )
 
+git_repository(
+    name = "rules_compdb",
+    commit = "d198303a4319092ab31895c4b98d64174ebe8872",
+    remote = "git@github.com:grailbio/bazel-compilation-database.git",
+)
+
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
 versions.check("7.2.0")
@@ -411,6 +417,10 @@ hedron_compile_commands_setup_transitive_transitive()
 load("@hedron_compile_commands//:workspace_setup_transitive_transitive_transitive.bzl", "hedron_compile_commands_setup_transitive_transitive_transitive")
 
 hedron_compile_commands_setup_transitive_transitive_transitive()
+
+load("@rules_compdb//:deps.bzl", "rules_compdb_deps")
+
+rules_compdb_deps()
 
 ####### JVM #######
 load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
