@@ -192,18 +192,16 @@ def cfamily_settings(filename):
     if not labels:
         sys.exit("No cc rules depend on this source file.")
 
-    repository_override = '--override_repository=bazel_compdb=' + os.path.dirname(
+    repository_override = '--override_repository=rules_compdb=' + os.path.dirname(
         os.path.realpath(__file__))
 
     aspect_definition = '--aspects=@rules_compdb//:aspects.bzl%compilation_database_aspect'
 
-    print(repository_override)
-    print(aspect_definition)
     bazel_aspects = [
         _BAZEL,
         'build',
         aspect_definition,
-        repository_override,
+        #repository_override,
         '--output_groups=compdb_files,header_files',
     ] + labels
     proc = subprocess.Popen(bazel_aspects,
