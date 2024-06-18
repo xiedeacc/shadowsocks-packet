@@ -353,7 +353,7 @@ new_git_repository(
 
 git_repository(
     name = "hedron_compile_commands",
-    commit = "1ee1e8f8118838c63b6a2a91972cba46c77c4855",
+    commit = "e43e8eaeed3e252ac7c02983f4b1792bdff2e2f0",
     remote = "git@github.com:xiedeacc/bazel-compile-commands-extractor.git",
 )
 

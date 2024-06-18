@@ -14,10 +14,10 @@ test:coverage --linkopt=-lc
 test:coverage --nocache_test_results
 
 
-build --features=-compiler_param_file
-build --features=-layering_check
-build --host_features=-compiler_param_file
-build --host_features=-layering_check
+#build --features=-compiler_param_file
+#build --features=-layering_check
+#build --host_features=-compiler_param_file
+#build --host_features=-layering_check
 build --announce_rc
 build --cxxopt=-D_GLIBCXX_USE_CXX11_ABI=1
 build -c opt
