@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 
+#include "absl/strings/ascii.h"
 #include "absl/time/time.h"
 #include "google/protobuf/message.h"
 
@@ -117,10 +118,11 @@ class Util {
   static std::string Hash(const std::string &str);
 
   static void PrintProtoMessage(const google::protobuf::Message &msg);
+  static bool ASCIIIsPrint(unsigned char c) { return absl::ascii_isprint(c); }
 
  public:
   static const char *kPathDelimeter;
 };
 
 }  // namespace util
-}  // shadowsocks
+}  // namespace shadowsocks

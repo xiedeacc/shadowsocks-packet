@@ -353,14 +353,8 @@ new_git_repository(
 
 git_repository(
     name = "hedron_compile_commands",
-    commit = "a14ad3a64e7bf398ab48105aaa0348e032ac87f8",
-    remote = "git@github.com:hedronvision/bazel-compile-commands-extractor.git",
-)
-
-git_repository(
-    name = "rules_compdb",
-    commit = "d198303a4319092ab31895c4b98d64174ebe8872",
-    remote = "git@github.com:grailbio/bazel-compilation-database.git",
+    commit = "1ee1e8f8118838c63b6a2a91972cba46c77c4855",
+    remote = "git@github.com:xiedeacc/bazel-compile-commands-extractor.git",
 )
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
@@ -402,25 +396,19 @@ go_register_toolchains(version = "1.18")
 
 perl_register_toolchains()
 
+####### compile commands db #######
 load("@hedron_compile_commands//:workspace_setup.bzl", "hedron_compile_commands_setup")
+load("@hedron_compile_commands//:workspace_setup_transitive.bzl", "hedron_compile_commands_setup_transitive")
+load("@hedron_compile_commands//:workspace_setup_transitive_transitive.bzl", "hedron_compile_commands_setup_transitive_transitive")
+load("@hedron_compile_commands//:workspace_setup_transitive_transitive_transitive.bzl", "hedron_compile_commands_setup_transitive_transitive_transitive")
 
 hedron_compile_commands_setup()
 
-load("@hedron_compile_commands//:workspace_setup_transitive.bzl", "hedron_compile_commands_setup_transitive")
-
 hedron_compile_commands_setup_transitive()
-
-load("@hedron_compile_commands//:workspace_setup_transitive_transitive.bzl", "hedron_compile_commands_setup_transitive_transitive")
 
 hedron_compile_commands_setup_transitive_transitive()
 
-load("@hedron_compile_commands//:workspace_setup_transitive_transitive_transitive.bzl", "hedron_compile_commands_setup_transitive_transitive_transitive")
-
 hedron_compile_commands_setup_transitive_transitive_transitive()
-
-load("@rules_compdb//:deps.bzl", "rules_compdb_deps")
-
-rules_compdb_deps()
 
 ####### JVM #######
 load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
