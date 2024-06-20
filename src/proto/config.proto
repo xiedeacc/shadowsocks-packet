@@ -2,11 +2,45 @@ syntax = "proto3";
 
 package shadowsocks.proto;
 
-message BaseConfig {
-  string nacos_sdk_addr = 1;
-  string nacos_namespace = 2;
-  string nacos_service_name = 3;
-  string nacos_cluster_name = 4;
-  string nacos_group_name = 5;
-  uint32 nacos_sdk_rcv_udp_port = 6;
+message Server {
+  string server = 1;
+  uint32 server_port = 2;
+  string password = 3;
+  string mode = 4;
+  uint32 timeout = 5;
+  string method = 6;
+  uint32 nofile = 7;
+  string plugin = 8;
+  string plugin_opts = 9;
+  bool ipv6_first = 10;
+}
+
+message Local {
+  string server = 1;
+  uint32 server_port = 2;
+  string password = 3;
+  string mode = 4;
+  uint32 timeout = 5;
+  string method = 6;
+  uint32 nofile = 7;
+  string plugin = 8;
+  string plugin_opts = 9;
+  bool ipv6_first = 10;
+  string local_address = 11;
+  uint32 local_port = 12;
+}
+
+message Dns {
+  string local_address = 1;
+  uint32 local_port = 2;
+  repeated string trust_upstream_servers = 3;
+  repeated string china_upstream_servers = 4;
+  string china_ip_domain_file = 5;
+  string gfw_ip_domain_file = 6;
+}
+
+message Config {
+  repeated Server servers = 1;
+  Local local = 2;
+  Dns dns = 3;
 }

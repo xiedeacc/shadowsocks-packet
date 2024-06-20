@@ -1,8 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2023  xiedeacc.com.
+ * Copyright (c) 2024 xiedeacc.com.
  * All rights reserved.
  *******************************************************************************/
-#pragma once
+
+#ifndef SHADOWSOCKS_UTIL_BARRIER_H
+#define SHADOWSOCKS_UTIL_BARRIER_H
 
 namespace shadowsocks {
 namespace util {
@@ -52,4 +54,6 @@ inline void MemoryWriteBarrier() { MemoryBarrier(); }
 #endif
 
 }  // namespace util
-}  // shadowsocks
+}  // namespace shadowsocks
+
+#endif /* SHADOWSOCKS_UTIL_BARRIER_H */

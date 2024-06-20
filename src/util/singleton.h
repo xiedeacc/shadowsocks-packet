@@ -1,8 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2023  xiedeacc.com.
+ * Copyright (c) 2024 xiedeacc.com.
  * All rights reserved.
  *******************************************************************************/
-#pragma once
+
+#ifndef SHADOWSOCKS_UTIL_SINGLETON_H
+#define SHADOWSOCKS_UTIL_SINGLETON_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -95,4 +97,6 @@ template <typename T>
 class Singleton : public SingletonBase<T> {};
 
 }  // namespace util
-}  // shadowsocks
+}  // namespace shadowsocks
+
+#endif /* SHADOWSOCKS_UTIL_SINGLETON_H */

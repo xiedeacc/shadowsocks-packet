@@ -140,6 +140,7 @@ cc_binary(
     deps = [
         ":dnl",
         "@boost//:thread",
+        "@com_github_gflags_gflags//:gflags",
     ],
 )
 

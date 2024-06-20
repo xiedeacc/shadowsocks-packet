@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023  xiedeacc.com.
+ * Copyright (c) 2024 xiedeacc.com.
  * All rights reserved.
  *******************************************************************************/
 
@@ -16,20 +16,13 @@ namespace shadowsocks {
 namespace util {
 
 TEST(Util, LoadContent) {
-  auto content =
-      Util::LoadContent(string("test_data/config_test/base_config.json"));
+  auto content = Util::LoadContent(string("test_data/config/config.json"));
   LOG(INFO) << content;
-}
-
-TEST(Util, GetServerIp) {
-  auto ip_addr = Util::GetServerIp();
-  LOG(INFO) << ip_addr;
-  ASSERT_EQ("192.168.220.128", ip_addr);
 }
 
 TEST(Util, ListDir) {
   vector<string> files;
-  EXPECT_EQ(true, Util::ListDir("test_data/config_test", &files));
+  EXPECT_EQ(true, Util::ListDir("test_data/config", &files));
   EXPECT_EQ(2, files.size());
 }
 
@@ -41,8 +34,7 @@ TEST(Util, ToInt) {
 }
 
 TEST(Util, FileMd5) {
-  std::string md5_value =
-      Util::FileMd5("test_data/config_test/base_config.json");
+  std::string md5_value = Util::FileMd5("test_data/config/config.json");
   std::string real_md5 = "769ab1652caae8e5afa39f7dcad361b6";
   LOG(INFO) << "real md5: " << real_md5 << ", got md5: " << md5_value;
   EXPECT_EQ(md5_value, real_md5);
@@ -95,4 +87,4 @@ TEST(Util, StrTimeToTimestamp) {
 }
 
 }  // namespace util
-}  // shadowsocks
+}  // namespace shadowsocks

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023  xiedeacc.com.
+ * Copyright (c) 2024 xiedeacc.com.
  * All rights reserved.
  *******************************************************************************/
 
@@ -25,7 +25,6 @@
 #include "glog/logging.h"
 #include "google/protobuf/util/json_util.h"
 #include "openssl/md5.h"
-#include "src/util/ip_address.h"
 
 using absl::FormatTime;
 using absl::FromUnixMillis;
@@ -42,15 +41,6 @@ namespace shadowsocks {
 namespace util {
 
 const char *Util::kPathDelimeter = "/";
-
-string Util::GetServerIp() {
-  IPAddress ip_address;
-  if (!IPAddress::GetFirstPrivateAddress(&ip_address)) {
-    LOG(ERROR) << "Failed to get local ip address";
-    return "";
-  }
-  return ip_address.ToString();
-}
 
 int64_t Util::CurrentTimeMillis() {
   return absl::GetCurrentTimeNanos() / 1000000;

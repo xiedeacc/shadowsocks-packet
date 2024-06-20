@@ -1,0 +1,48 @@
+{
+    "servers": [
+        {
+            "server": "::1",
+            "server_port": 1080,
+            "password": "qh6289@QHW",
+            "mode": "tcp_and_udp",
+            "timeout": 600,
+            "method": "aes-256-gcm",
+            "nofile": 10240,
+            "plugin": "/usr/local/bin/v2ray-plugin",
+            "plugin_opts": "server;fast-open;path=/sspath;loglevel=none",
+            "ipv6_first": false
+        },
+        {
+            "server": "127.0.0.1",
+            "server_port": 1090,
+            "password": "abctest4Simple1234",
+            "mode": "tcp_and_udp",
+            "timeout": 600,
+            "method": "aes-256-gcm",
+            "nofile": 10240,
+            "plugin": "/usr/local/bin/v2ray-plugin",
+            "plugin_opts": "server;fast-open;path=/forsimple;loglevel=none",
+            "ipv6_first": false
+        }
+    ],
+    "local": {
+        "server": "18.163.6.135",
+        "server_port": 443,
+        "password": "qh6289@QHW",
+        "method": "aes-256-gcm",
+        "nofile": 102400,
+        "timeout": 600,
+        "local_address": "127.0.0.1",
+        "local_port": 1080,
+        "plugin": "/usr/local/bin/v2ray-plugin",
+        "plugin_opts": "tls;host=ssserver.youkechat.net;path=/sspath"
+    }, 
+    "dns": {
+        "local_address": "127.0.0.1",
+        "local_port": 53,
+        "trust_upstream_servers": ["8.8.8.8", "1.1.1.1"],
+        "china_upstream_servers": ["114.114.114.114", "223.6.6.6"],
+        "china_ip_domain_file": "/etc/shadowsocks/china_ip_domain.txt",
+        "gfw_ip_domain_file": "/etc/shadowsocks/gfw_ip_domain.txt"
+    }
+}

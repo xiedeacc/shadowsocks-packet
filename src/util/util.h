@@ -1,8 +1,10 @@
 /*******************************************************************************
- * Copyright (c) 2023  xiedeacc.com.
+ * Copyright (c) 2024 xiedeacc.com.
  * All rights reserved.
  *******************************************************************************/
-#pragma once
+
+#ifndef SHADOWSOCKS_UTIL_UTIL_H
+#define SHADOWSOCKS_UTIL_UTIL_H
 
 #include <map>
 #include <set>
@@ -20,8 +22,6 @@ class Util {
   virtual ~Util() {}
 
  public:
-  static std::string GetServerIp();
-
   static int64_t CurrentTimeMillis();
 
   static int64_t NanoTime();
@@ -126,3 +126,5 @@ class Util {
 
 }  // namespace util
 }  // namespace shadowsocks
+
+#endif /* SHADOWSOCKS_UTIL_UTIL_H */
