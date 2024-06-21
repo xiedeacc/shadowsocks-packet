@@ -22,10 +22,12 @@ class Util {
 
  public:
   static void SetUp() {
-    option.add_whitespace = false;
-    option.always_print_enums_as_ints = false;
-    option.always_print_primitive_fields = true;
-    option.preserve_proto_field_names = true;
+    print_opt.add_whitespace = false;
+    print_opt.always_print_enums_as_ints = false;
+    print_opt.always_print_primitive_fields = true;
+    print_opt.preserve_proto_field_names = true;
+
+    parse_opt.ignore_unknown_fields = true;
   }
 
   static int64_t CurrentUnixNanos();
@@ -48,6 +50,8 @@ class Util {
   static std::string BaseName(std::string_view path);
 
   static std::string Extention(std::string_view path);
+
+  static std::string LoadContent(std::string_view path);
 
   static bool StartWith(std::string_view in, std::string_view prefix);
 
@@ -95,11 +99,14 @@ class Util {
   static void FileMd5(const std::string &path, std::string *out,
                       bool upper_case = false);
 
-  static bool PrintProtoMessage(const google::protobuf::Message &msg,
-                                std::string *out);
+  static bool PrintProto(const google::protobuf::Message &msg,
+                         std::string *out);
+  static bool JsonToProto(const google::protobuf::Message &msg,
+                          std::string *out);
 
  public:
-  static google::protobuf::util::JsonOptions option;
+  static google::protobuf::util::JsonOptions print_opt;
+  static google::protobuf::util::JsonParseOptions parse_opt;
   static std::string ip;
 };
 

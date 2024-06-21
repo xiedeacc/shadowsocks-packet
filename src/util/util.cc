@@ -32,7 +32,7 @@ using namespace google::protobuf::util;
 namespace shadowsocks {
 namespace util {
 
-JsonPrintOptions Util::option;
+JsonPrintprint_opts Util::print_opt;
 
 int64_t Util::CurrentUnixNanos() { return absl::GetCurrentTimeNanos(); }
 
@@ -78,6 +78,16 @@ string Util::BaseName(string_view path) {
 std::string Util::Extention(string_view path) {
   std::filesystem::path file_path(path);
   return file_path.extension().string();
+}
+
+std::string Util::LoadContent(string_view path) {
+  std::filesystem::path file_path(path);
+  try {
+    boost::iostreams::mapped_file_source mapped_file(file_path);
+    return mapped_file.data();
+  } catch (const std::exception &e) {
+    LOG(ERROR) << "map " << path << " error, " << e.what();
+  }
 }
 
 bool Util::StartWith(string_view in, string_view prefix) {
@@ -174,9 +184,8 @@ void Util::FileMd5(const string &path, string *out, bool upper_case) {
   }
 }
 
-bool Util::PrintProtoMessage(const google::protobuf::Message &msg,
-                             string *out) {
-  if (!MessageToJsonString(msg, out, option).ok()) {
+bool Util::PrintProto(const google::protobuf::Message &msg, string *out) {
+  if (!MessageToJsonString(msg, out, print_opt).ok()) {
     return false;
   }
   return true;

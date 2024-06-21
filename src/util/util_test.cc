@@ -71,5 +71,14 @@ TEST(Util, FileMd5) {
   EXPECT_EQ(md5_value, "");
 }
 
+TEST(Util, PrintProto) {
+  std::string real_md5 = "579627b6ce697863f94dcb9679392be2";
+  EXPECT_EQ(md5_value, real_md5);
+
+  md5_value.clear();
+  Util::FileMd5("test_data/file/empty_file", &md5_value);
+  EXPECT_EQ(md5_value, "");
+}
+
 }  // namespace util
 }  // namespace shadowsocks
