@@ -6,12 +6,11 @@
 #ifndef SHADOWSOCKS_UTIL_UTIL_H
 #define SHADOWSOCKS_UTIL_UTIL_H
 
-#include <map>
-#include <set>
+#include <string_view>
 
-#include "absl/strings/ascii.h"
-#include "absl/time/time.h"
+#include "absl/strings/numbers.h"
 #include "google/protobuf/message.h"
+#include "google/protobuf/util/json_util.h"
 
 namespace shadowsocks {
 namespace util {
@@ -19,109 +18,89 @@ namespace util {
 class Util {
  private:
   Util() {}
-  virtual ~Util() {}
+  ~Util() {}
 
  public:
-  static int64_t CurrentTimeMillis();
+  static void SetUp() {
+    option.add_whitespace = false;
+    option.always_print_enums_as_ints = false;
+    option.always_print_primitive_fields = true;
+    option.preserve_proto_field_names = true;
+  }
 
-  static int64_t NanoTime();
+  static int64_t CurrentUnixNanos();
 
-  static uint64_t Now();
+  static int64_t CurrentUnixMillis();
 
-  static uint64_t StrTimeToTimestamp(const std::string &time,
-                                     int32_t offset = 0);
+  static int64_t ToUnixMillis(
+      std::string_view time,
+      std::string_view format = "%Y-%m-%d%ET%H:%M:%E3S%Ez");
 
-  static std::string ToTimeString(const int64_t ts);
+  static std::string UnixMillisToString(
+      const int64_t ms, std::string_view format = "%Y-%m-%d %H:%M:%S");
 
-  static std::string GetTodayString();
-
-  static int64_t Random(int64_t start, int64_t end);
+  static int64_t Random(int64_t low, int64_t upper);
 
   static void Sleep(int64_t ms);
 
-  static void SleepUntil(const absl::Time &time);
+  static std::string DirName(std::string_view path);
 
-  static bool SleepUntil(const absl::Time &time, volatile bool *stop_signal);
+  static std::string BaseName(std::string_view path);
 
-  static std::string GetNacosNamingServiceUrl(const std::string &nacos_sdk_addr,
-                                              const std::string &service_name,
-                                              const std::string &group_name,
-                                              const std::string &namespace_id,
-                                              const std::string &clusters,
-                                              bool healthy_only);
+  static std::string Extention(std::string_view path);
 
-  static std::string DirName(const std::string &path);
+  static bool StartWith(std::string_view in, std::string_view prefix);
 
-  static std::string BaseName(const std::string &path);
+  static void ToUpper(std::string_view in, std::string *out);
 
-  static std::string FileExtention(const std::string &path);
+  static void ToUpper(std::string *in);
 
-  static bool Remove(const std::string &dir, const std::string &file);
+  static void ToLower(std::string_view in, std::string *out);
 
-  static bool Remove(const std::string &dir);
+  static void ToLower(std::string *in);
 
-  static bool Mkdir(const std::string &dir);
+  static void Trim(std::string &in);
 
-  static bool Exist(const std::string &path);
+  template <class IntegerType>
+  static bool ToInteger(std::string_view in, IntegerType *out) {
+    // auto result = std::from_chars(in.data(), in.data() + in.size(), *out);
+    // if (result.ec != std::errc{}) {
+    // return false;
+    // }
+    // return true;
+    return absl::SimpleAtoi(in, out);
+  }
 
-  static bool ListDir(const std::string &path, std::vector<std::string> *files,
-                      const bool recursive = false);
+  static bool HexToUInt64(std::string_view in, uint64_t *out);
 
-  static bool CopyFile(const std::string &src_file_path,
-                       const std::string dst_file_path);
+  static void ToHexStr(const unsigned char *in, size_t len, std::string *out,
+                       bool upper_case = false);
 
-  static bool Copy(const std::string &src_path, const std::string dst_path);
+  static void ToHexStr(const uint64_t in, std::string *out,
+                       bool upper_case = false);
 
-  static bool WriteToFile(const std::string &dir, const std::string &file,
-                          const std::string &content);
+  static void ReplaceAll(std::string &in, std::string_view from,
+                         std::string_view to);
 
-  static std::istream &GetLine(std::istream &is, std::string *line);
+  static void Split(std::string_view in, std::string_view delim,
+                    std::vector<std::string> &result);
 
-  static std::string LoadContent(const std::string &file_name);
+  static void Base64Encode(std::string_view in, std::string *out);
 
-  static std::vector<std::string> LoadLines(const std::string &file_name);
+  static void Base64Decode(std::string_view in, std::string *out);
 
-  static std::string FileMd5(const std::string &file_path);
+  static void Md5(std::string_view in, std::string *out,
+                  bool upper_case = false);
 
-  static std::string ToUpper(const std::string &str);
+  static void FileMd5(const std::string &path, std::string *out,
+                      bool upper_case = false);
 
-  static std::string ToLower(const std::string &str);
-
-  static void ToLower(std::string *str);
-
-  static void Trim(std::string &s);
-
-  static bool ToInt(const std::string &str, uint32_t *value);
-
-  static bool StartWith(const std::string &str, const std::string &prefix);
-
-  static void ReplaceAll(std::string &s, const std::string &from,
-                         const std::string &to);
-
-  static void Split(const std::string &str, const std::string &delim,
-                    std::vector<std::string> &result, bool trim_empty = true);
-
-  static std::string ToString(const std::set<uint64_t> &ids);
-
-  static std::string ToString(const std::map<std::string, std::string> &vars);
-
-  static std::string Base64Encode(const std::string &input);
-
-  static std::string Base64Decode(const std::string &input);
-
-  static std::string Md5(const std::string &str, bool use_upper_case = false);
-
-  static uint64_t HexStrToUInt64(const std::string &in);
-
-  static std::string UInt64ToHexStr(const uint64_t in);
-
-  static std::string Hash(const std::string &str);
-
-  static void PrintProtoMessage(const google::protobuf::Message &msg);
-  static bool ASCIIIsPrint(unsigned char c) { return absl::ascii_isprint(c); }
+  static bool PrintProtoMessage(const google::protobuf::Message &msg,
+                                std::string *out);
 
  public:
-  static const char *kPathDelimeter;
+  static google::protobuf::util::JsonOptions option;
+  static std::string ip;
 };
 
 }  // namespace util

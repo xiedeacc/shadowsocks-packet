@@ -26,11 +26,15 @@ cc_test(
 )
 
 cc_library(
+    name = "double_buffer_holder",
+    hdrs = ["double_buffer_holder.h"],
+    deps = [],
+)
+
+cc_library(
     name = "util",
     srcs = ["util.cc"],
-    hdrs = [
-        "util.h",
-    ],
+    hdrs = ["util.h"],
     deps = [
         "@boost//:algorithm",
         "@boost//:beast",
@@ -45,11 +49,30 @@ cc_library(
     ],
 )
 
+cc_binary(
+    name = "util_benchmark",
+    testonly = 1,
+    srcs = ["util_benchmark.cc"],
+    copts = [
+        "-Wunused-value",
+    ],
+    data = [
+        "//test_data/config:config.json",
+    ],
+    tags = ["benchmark"],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":util",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+)
+
 cc_test(
     name = "util_test",
     srcs = ["util_test.cc"],
     data = [
         "//test_data/config:config.json",
+        "//test_data/file:empty_file",
     ],
     deps = [
         ":util",
@@ -61,6 +84,7 @@ cc_library(
     name = "config",
     hdrs = ["config.h"],
     deps = [
+        ":double_buffer_holder",
         ":singleton",
         ":util",
         "//src/proto:cc_config",

@@ -10,6 +10,7 @@
 
 #include "gflags/gflags.h"
 #include "src/proto/config.pb.h"
+#include "src/util/double_buffer_holder.h"
 #include "src/util/singleton.h"
 #include "src/util/util.h"
 
@@ -27,10 +28,14 @@ class Config : public Singleton<Config> {
   virtual ~Config() {}
 
  public:
-  bool Init() {}
+  bool Init() {
+    // if () {
+    // }
+  }
 
  private:
   std::string config_path_;
+  DoubleBufferHolder<proto::Config> config_holder_;
 };
 
 }  // namespace util
